@@ -11,14 +11,15 @@ clist=$*
 (
 for n in ${clist} ; do
  nn=`docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' ${n}`
- echo ${n} ${nn}
+ echo ${nn} ${n}
 done
 ) > ${TPREF}_001.txt
 
 # Get /etc/hosts for each containter in list
 (
 for n in ${clist} ; do
- docker exec -i ${n} cat /etc/hosts | awk '{print "'${n}': "$0}'
+ echo '127.0.0.1 localhost' | cat - ${TPREF}_001.txt  | docker exec -i ${n} /bin/bash -c 'cat > /etc/hosts'
 done
-) > ${TPREF}_002.txt
+)
 
+\rm ${TPREF}_001.txt
