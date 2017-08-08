@@ -18,7 +18,7 @@ done
 # Get /etc/hosts for each containter in list
 (
 for n in ${clist} ; do
- docker ${n} exec -t -i cat /etc/hosts | awk '{print "'${n}': "$0}'
+ docker exec ${n} -i cat /etc/hosts | awk '{print "'${n}': "$0}'
 done
 ) > ${TPREF}_002.txt
 
