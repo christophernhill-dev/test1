@@ -13,6 +13,9 @@ before_install:
  - docker exec -i fc11-testreport ls -altr /MITgcm
  - docker exec -i fc11-testreport yum install python-pip
  - docker exec -i fc11-testreport yum install gcc-gfortran
+ - docker pull mitgcm/testreport-images:centos-7.3.1611-20170708
+ - docker run  -v `pwd`:/MITgcm --name c7-node001 -t -d mitgcm/testreport-images:centos-7.3.1611-20170708 /bin/bash
+ - docker run  -v `pwd`:/MITgcm --name c7-node002 -t -d mitgcm/testreport-images:centos-7.3.1611-20170708 /bin/bash
  
 install: 
  - "pip install -r requirements.txt"
@@ -24,4 +27,5 @@ script:
  - docker exec -i fc11-testreport df -h
  - docker exec -i fc11-testreport gfortran
  - docker exec -i fc11-testreport bash -c "cd /MITgcm; pwd; ls -altr"
+ - docker ps
  - python mytest_driver
