@@ -11,7 +11,7 @@ before_install:
  - docker run  -v `pwd`:/MITgcm -h c7-n002 --name c7-n002 -d -t mitgcm/testreport-images:centos-7.3.1611-20170809-v5 /bin/bash
  - docker exec -t -i c7-n001 /usr/sbin/sshd
  - docker exec -t -i c7-n002 /usr/sbin/sshd
- - /bin/bash -s ./ci/travis/functions/set_container_hosts.sh
+ - /bin/bash ./ci/travis/functions/set_container_hosts.sh c7-n001 c7-n002
  
 install: 
  - "pip install -r requirements.txt"
